@@ -167,6 +167,13 @@ class AILENS(object):
         LearnData = [self.__Data_buff[1], 100 - self.__Data_buff[2]]
         return LearnData
 
+    def clear_function(self):
+        """基本描述
+        清除学习对象
+        """
+        i2c.write(Camera_Add, 10)
+        i2c.write(Camera_Add, 10)
+
 
 if __name__ == '__main__':
     ai = AILENS()
