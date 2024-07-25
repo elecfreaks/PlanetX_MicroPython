@@ -28,8 +28,8 @@ class SOILHUMIDITY(object):
             value: 含水量百分比
         """
         __value = self.__pin.read_analog()
-        value = ((__value - 0) * (100 - 0)) / (1023 - 0) + 0
-        return 100-value
+        value = ((__value - 0) * (100 - 0)) / (1023 - 0)
+        return value
 
 
 if __name__ == "__main__":

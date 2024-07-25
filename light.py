@@ -28,15 +28,17 @@ class LIGHT(object):
         Returns:
             value: 光强度单位勒克司Lux
         """
-        __value = self.__pin.read_analog()
-        if __value <= 300:
-            __final_val = ((__value - 10) * (1600 - 0)) / (300 - 10) + 0
+        raw_value = self.__pin.read_analog()
+
+        # 为确保结果非负，我们可以直接处理不同区间的线性映射
+        if raw_value <= 200:
+            # 对原始区间[45, 200]进行映射到[0, 1600]
+            lux = (raw_value - 45) * (1600 / (200 - 45))
         else:
-            __final_val = ((__value - 300) * (14000 - 1600)) / (1023 - 300) + 1600
-        if __final_val <= 0:
-            return 0
-        else:
-            return __final_val
+            # 对原始区间[201, 1023]进行映射到[1600, 14000]
+            lux = 1600 + (raw_value - 200) * ((14000 - 1600) / (1023 - 200))
+
+        return max(0, lux) 
 
 if __name__ == "__main__":
     s = LIGHT(J1)
